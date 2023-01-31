@@ -3,8 +3,9 @@
  */
 import { Context } from 'aws-lambda';
 import * as AWS from "aws-sdk";
-AWS.config.update({ region: 'us-west-2' });
 import { getAwsAccountId } from './awsUtil';
+
+AWS.config.update({ region: process.env.AWS_REGION });
 
 /**
  * Sends a message to an SQS queue.
