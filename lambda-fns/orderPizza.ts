@@ -6,7 +6,6 @@ import { getNotificationsQueueUrl } from './utils/sqsUtil';
 
 exports.handler = async function(orderRequest: OrderRequest, context: Context) {
     console.log("[orderPizza] Order info: ", JSON.stringify(orderRequest, undefined, 2));    
-    console.log(`[orderPizza] ${process.env.AWS_REGION}`);
     
     let {flavour, deliveryAddress, customerName, customerPhoneNumber}: OrderRequest = orderRequest;
     customerName = customerName || 'Dear customer';

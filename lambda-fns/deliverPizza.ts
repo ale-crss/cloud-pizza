@@ -13,7 +13,7 @@ exports.handler = async function(customerInfo: CustomerInfo, context: Context) {
     if (customerPhoneNumber) {
         let body: string = `${customerName}, your order ${orderNumber} is ready to be delivered`;
         if (deliveryAddress) {
-            body += `  at ${deliveryAddress}.`;
+            body += ` at ${deliveryAddress}.`;
         } else {
             body += '.';
         }
