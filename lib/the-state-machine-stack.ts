@@ -125,23 +125,15 @@ export class TheStateMachineStack extends cdk.Stack {
     // Set the trigger of this function.
     sendNotificationLambda.addEventSource(new lambdaEventSources.SqsEventSource(notificationsQueue));          
     
-    // Set the permissions to allow this function send data to the queue.
-    const orderPizzaLambdaPolicy = new iam.PolicyStatement();
-    orderPizzaLambdaPolicy.addResources(notificationsQueue.queueArn);
-    orderPizzaLambdaPolicy.addActions('sqs:SendMessage');
-    orderPizzaLambda.addToRolePolicy(orderPizzaLambdaPolicy);
-
-    // Set the permissions to allow this function send data to the queue.
-    const cookPizzaLambdaPolicy = new iam.PolicyStatement();
-    cookPizzaLambdaPolicy.addResources(notificationsQueue.queueArn);
-    cookPizzaLambdaPolicy.addActions('sqs:SendMessage');
-    cookPizzaLambda.addToRolePolicy(cookPizzaLambdaPolicy);
+    // Create a policy to access the queue.
+    const notificationsQueueAccessPolicy = new iam.PolicyStatement();
+    notificationsQueueAccessPolicy.addResources(notificationsQueue.queueArn);
+    notificationsQueueAccessPolicy.addActions('sqs:SendMessage');
     
-    // Set the permissions to allow this function send data to the queue.
-    const deliverPizzaLambdaPolicy = new iam.PolicyStatement();
-    deliverPizzaLambdaPolicy.addResources(notificationsQueue.queueArn);
-    deliverPizzaLambdaPolicy.addActions('sqs:SendMessage');
-    deliverPizzaLambda.addToRolePolicy(deliverPizzaLambdaPolicy);    
+    // Set the permissions to allow these functions send data to the queue.
+    orderPizzaLambda.addToRolePolicy(notificationsQueueAccessPolicy);
+    cookPizzaLambda.addToRolePolicy(notificationsQueueAccessPolicy);
+    deliverPizzaLambda.addToRolePolicy(notificationsQueueAccessPolicy);    
 
     /**
      * HTTP API Definition
