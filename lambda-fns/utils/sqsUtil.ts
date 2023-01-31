@@ -23,7 +23,7 @@ async function queueMessage(message: string, queueUrl: string): Promise<void> {
     };
           
     try {
-        const data = await sqs.sendMessage(params).promise();
+        await sqs.sendMessage(params).promise();
         console.log(`[sqsUtil] Successfully sent message to the queue [${queueUrl}]. Message: ${message}`);
     } catch(err) {
         console.error(`[sqsUtil] Failed to send message to the queue [${queueUrl}]. Error: `, err);
